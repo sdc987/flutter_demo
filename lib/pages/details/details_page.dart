@@ -3,9 +3,12 @@ import 'package:demo202/models/painting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
+class DetailsPage extends StatelessWidget {
+  const DetailsPage({
+    Key key,
+    this.showMenu,
+  }) : super(key: key);
+  final Function showMenu;
   @override
   Widget build(BuildContext context) {
     return Consumer<PaintingBloc>(
@@ -21,7 +24,16 @@ class HomePage extends StatelessWidget {
               }
 
               return Scaffold(
-                appBar: AppBar(title: Text(name)),
+                appBar: AppBar(
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                    ),
+                    onPressed: showMenu,
+                  ),
+                  title: Text(name),
+                ),
                 body: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1.0),

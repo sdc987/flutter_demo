@@ -1,4 +1,4 @@
-import 'package:demo202/pages/home/home_page.dart';
+import 'package:demo202/pages/details/details_page.dart';
 import 'package:demo202/pages/menu/menu_page.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +59,9 @@ class _MainPageState extends State<MainPage>
                       ..translate(slideAmount)
                       ..scale(contentScale, contentScale),
                     alignment: Alignment.centerRight,
-                    child: HomePage(),
+                    child: DetailsPage(
+                      showMenu: this.open,
+                    ),
                   ),
                 ],
               );
