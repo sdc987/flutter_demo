@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MenuPage extends StatelessWidget {
-  const MenuPage({Key key}) : super(key: key);
+  const MenuPage({
+    Key key,
+    this.onSelect,
+  }) : super(key: key);
+
+  final Function onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,6 @@ class MenuPage extends StatelessWidget {
         height: size.height,
         width: size.width,
         alignment: Alignment.topLeft,
-        color: Colors.blue,
         child: Consumer<PaintingBloc>(
           builder: (_, bloc, child) {
             return StreamBuilder<List<Painting>>(
@@ -29,22 +33,27 @@ class MenuPage extends StatelessWidget {
 
                 var paintings = snapshot.data;
                 return SizedBox(
-                  width: 100,
+                  width: 200,
                   child: Column(
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
-                        child: Text('Paintings',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20)),
+                        child:
+                            Text('Paintings', style: TextStyle(fontSize: 20)),
                       ),
                       Expanded(
                         child: ListView(
                           padding: EdgeInsets.all(0),
                           children: paintings
                               .map(
-                                (painting) => _PaintingContainer(
-                                  painting: painting,
+                                (painting) => GestureDetector(
+                                  onTap: () {
+                                    bloc.setPainting(painting);
+                                    this.onSelect();
+                                  },
+                                  child: _PaintingContainer(
+                                    painting: painting,
+                                  ),
                                 ),
                               )
                               .toList(),
@@ -72,19 +81,25 @@ class _PaintingContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(5),
-      height: 100,
-      width: 100,
+      padding: EdgeInsets.all(10),
+      height: 150,
+      width: 150,
       child: ClipOval(
         child: Image.asset(
           painting.imageName.assetPath(),
         ),
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey, width: 1.0),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [BoxShadow(color: Colors.grey, offset: Offset(5, 5))]),
+        color: Colors.white,
+        border: Border.all(color: Colors.grey, width: 1.0),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(5, 5),
+          ),
+        ],
+      ),
     );
   }
 }

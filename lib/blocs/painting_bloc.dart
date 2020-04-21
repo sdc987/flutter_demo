@@ -4,14 +4,21 @@ import 'package:rxdart/rxdart.dart';
 
 class PaintingBloc {
   PaintingApis _api = PaintingApis();
-  BehaviorSubject<List<Painting>> _paintingsSubject =
-      BehaviorSubject<List<Painting>>();
+  var _paintingsSubject = BehaviorSubject<List<Painting>>();
+  var _paintingSubject = PublishSubject<Painting>();
 
   PaintingBloc() {
     loadPaintings();
   }
 
   Stream<List<Painting>> get paintings => _paintingsSubject.stream;
+  Stream<Painting> get painting => _paintingSubject.stream;
+
+  setPainting(Painting painting) {
+    if (painting != null) {
+      _paintingSubject.sink.add(painting);
+    }
+  }
 
   void loadPaintings() async {
     try {
@@ -24,5 +31,6 @@ class PaintingBloc {
 
   void dispose() {
     _paintingsSubject?.close();
+    _paintingSubject?.close();
   }
 }
