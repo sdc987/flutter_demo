@@ -13,7 +13,7 @@ class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   bool _canBeDragged = false;
-  static const double maxSlide = 125;
+  static const double maxSlide = 150;
   static const double minDragStartEdge = 60;
   static const double maxDragStartEdge = maxSlide - 16;
 
@@ -44,28 +44,29 @@ class _MainPageState extends State<MainPage>
         onHorizontalDragUpdate: _onDragUpdate,
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              double animValue = _animationController.value;
-              final slideAmount = maxSlide * animValue;
-              final contentScale = 1.0 - (0.3 * animValue);
-              return Stack(
-                children: <Widget>[
-                  MenuPage(
-                    onSelect: this.close,
+          animation: _animationController,
+          builder: (context, child) {
+            double animValue = _animationController.value;
+            final slideAmount = maxSlide * animValue;
+            final contentScale = 1.0 - (0.3 * animValue);
+            return Stack(
+              children: <Widget>[
+                MenuPage(
+                  onSelect: this.close,
+                ),
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(slideAmount)
+                    ..scale(contentScale, contentScale),
+                  alignment: Alignment.centerRight,
+                  child: DetailsPage(
+                    showMenu: this.open,
                   ),
-                  Transform(
-                    transform: Matrix4.identity()
-                      ..translate(slideAmount)
-                      ..scale(contentScale, contentScale),
-                    alignment: Alignment.centerRight,
-                    child: DetailsPage(
-                      showMenu: this.open,
-                    ),
-                  ),
-                ],
-              );
-            }),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -87,21 +88,13 @@ class _MainPageState extends State<MainPage>
   }
 
   void _onDragEnd(DragEndDetails details) {
-    //I have no idea what it means, copied from Drawer
-    double _kMinFlingVelocity = 365.0;
-
     if (_animationController.isDismissed || _animationController.isCompleted) {
       return;
     }
-    if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
-      double visualVelocity = details.velocity.pixelsPerSecond.dx /
-          MediaQuery.of(context).size.width;
-
-      _animationController.fling(velocity: visualVelocity);
-    } else if (_animationController.value < 0.5) {
+    if (_animationController.value < 0.5) {
       close();
-    } else {
-      open();
+      return;
     }
+    open();
   }
 }
