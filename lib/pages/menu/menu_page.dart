@@ -1,6 +1,8 @@
 import 'package:demo202/blocs/painting_bloc.dart';
 import 'package:demo202/models/painting.dart';
-import 'package:demo202/utils/string_extension.dart';
+import 'package:demo202/pages/menu/widgets/message.dart';
+import 'package:demo202/pages/menu/widgets/painting_container.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,10 +28,10 @@ class MenuPage extends StatelessWidget {
               stream: bloc.paintings,
               builder: (context, snapshot) {
                 if (snapshot.hasError)
-                  return _MessageWidget(message: 'Error Loading Records');
+                  return MessageWidget(message: 'Error Loading Records');
 
                 if (!snapshot.hasData)
-                  return _MessageWidget(message: 'No Records');
+                  return MessageWidget(message: 'No Records');
 
                 var paintings = snapshot.data;
                 return SizedBox(
@@ -51,7 +53,7 @@ class MenuPage extends StatelessWidget {
                                     bloc.setPainting(painting);
                                     this.onSelect();
                                   },
-                                  child: _PaintingContainer(
+                                  child: PaintingContainer(
                                     painting: painting,
                                   ),
                                 ),
@@ -66,57 +68,6 @@ class MenuPage extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class _PaintingContainer extends StatelessWidget {
-  const _PaintingContainer({
-    Key key,
-    this.painting,
-  }) : super(key: key);
-  final Painting painting;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(10),
-      height: 150,
-      width: 150,
-      child: ClipOval(
-        child: Image.asset(
-          painting.imageName.assetPath(),
-        ),
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(5, 5),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MessageWidget extends StatelessWidget {
-  const _MessageWidget({
-    Key key,
-    this.message,
-  }) : super(key: key);
-
-  final String message;
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        message,
-        style: TextStyle(color: Colors.white),
       ),
     );
   }

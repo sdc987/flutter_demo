@@ -30,7 +30,10 @@ class DetailsPage extends StatelessWidget {
 
             var painting = snapshot.data;
 
-            return SliverPage(painting: painting, showMenu: showMenu);
+            return SliverPage(
+              painting: painting,
+              showMenu: showMenu,
+            );
           },
         );
       },
