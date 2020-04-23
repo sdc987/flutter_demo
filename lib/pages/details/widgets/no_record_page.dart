@@ -22,7 +22,7 @@ class NoRecordPage extends StatelessWidget {
         title: Text('No Records'),
       ),
       body: Container(
-        color: Colors.black45,
+        color: Colors.white,
       ),
     );
   }
