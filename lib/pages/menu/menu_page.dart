@@ -21,6 +21,7 @@ class MenuPage extends StatelessWidget {
       child: Container(
         height: size.height,
         width: size.width,
+        color: Colors.grey,
         alignment: Alignment.topLeft,
         child: Consumer<PaintingBloc>(
           builder: (_, bloc, child) {
@@ -40,8 +41,11 @@ class MenuPage extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
-                        child:
-                            Text('Paintings', style: TextStyle(fontSize: 20)),
+                        child: Text('Paintings',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                            )),
                       ),
                       Expanded(
                         child: ListView(

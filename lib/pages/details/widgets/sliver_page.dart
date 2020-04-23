@@ -32,8 +32,10 @@ class SliverPage extends StatelessWidget {
             title: Text(painting.name),
             expandedHeight: 600.0,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(painting.imageName.assetPath(),
-                  fit: BoxFit.cover),
+              background: Image.asset(
+                painting.imageName.assetPath(),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SliverList(
