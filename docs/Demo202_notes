@@ -7,9 +7,33 @@ show default project
 
 
 Create main_page.dart
+as basic Scaffold
 
 create pages.dart library
 
 
-create 
+create routes
+
+Create application.dart
+
+update main.dart
+
+add orientation code
+
+add details page. move main code to details
+
+create menu code with container
+
+create main code
+Material => stack => add menu and details page
+
+add transform.
+
+add animation
+
+create api/bloc
+
+create menu
+
+create details
 
